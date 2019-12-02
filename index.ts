@@ -36,24 +36,24 @@ export class gcsFileUpload extends CloudStorage {
 
   uploadFile(file: uploadFile, options?: uploadOptions): Promise<string> {
     return new Promise((resolve, reject) => {
-		  const { originalname, buffer } = file;
+      const { originalname, buffer } = file;
 
-		  const bucket = this.bucket(this.bucketName);
-		  const blob = bucket.file(originalname.replace(/ /g, '_'));
-		  const blobStream = blob.createWriteStream({
-		    resumable: options ? options.resum : false,
-		    gzip: options ? options.gcszip : false,
-		  });
-		  blobStream.on('finish', () => {
-		    const publicUrl: string = format(
-		      `https://storage.googleapis.com/${bucket.name}/${blob.name}`,
-		    );
-		    resolve(publicUrl);
-		  })
-		  .on('error', () => {
-		    reject('Unable to upload file, something went wrong');
-		  })
-		  .end(buffer);
+      const bucket = this.bucket(this.bucketName);
+      const blob = bucket.file(originalname.replace(/ /g, '_'));
+      const blobStream = blob.createWriteStream({
+        resumable: options ? options.resum : false,
+        gzip: options ? options.gcszip : false,
+      });
+      blobStream.on('finish', () => {
+        const publicUrl: string = format(
+          `https://storage.googleapis.com/${bucket.name}/${blob.name}`,
+        );
+        resolve(publicUrl);
+      })
+        .on('error', () => {
+          reject('Unable to upload file, something went wrong');
+        })
+        .end(buffer);
     });
   }
 }

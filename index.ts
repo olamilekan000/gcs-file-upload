@@ -51,14 +51,6 @@ export class GcsFileUpload extends CloudStorage {
       } catch (error) {
         reject(error)
       }
-      // blobStream.on('finish', () => {
-      //   const publicUrl: string = `https://storage.googleapis.com/${bucket.name}/${blob.name}`
-      //   resolve(publicUrl);
-      // })
-      //   .on('error', () => {
-      //     reject('Unable to upload file, something went wrong');
-      //   })
-      //   .end(buffer);
     });
   }
 }

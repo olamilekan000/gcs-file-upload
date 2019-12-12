@@ -6,19 +6,19 @@ Upload files to Google Cloud Storage easily and with less code.
 
 ```sh
 - npm install gcs-file-upload
-- yarn add gcs-file-upload
 ```
+
 ## Usage
 
 ```sh
-const { gcsFileUpload } = require('gcs-file-upload')
+const { GcsFileUpload } = require('gcs-file-upload')
 const path = require('path')
 const fs = require('fs')
 
 # (path to file and service account key)
 const serviceKey = path.join(__dirname, './storage.json')
 
-const myBucket = new gcsFileUpload({
+const myBucket = new GcsFileUpload({
   keyFilename: serviceKey,
   projectId: 'your project Id',
 }, "Your Bucket name")

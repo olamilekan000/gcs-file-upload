@@ -1,25 +1,23 @@
 import Cloud = require('@google-cloud/storage')
-import util = require('util')
 
-const { format } = util;
 const CloudStorage = Cloud.Storage;
 
 interface ProjectKeyId {
-	keyFilename: string,
-	projectId: string,
+  keyFilename: string,
+  projectId: string,
 }
 
 interface uploadFile {
-	originalname: string,
-	buffer: number[]
+  originalname: string,
+  buffer: number[]
 }
 
 interface uploadOptions {
-	resum?: boolean,
-	gcszip?: boolean
+  resum?: boolean,
+  gcszip?: boolean
 }
 
-export class gcsFileUpload extends CloudStorage {
+export class GcsFileUpload extends CloudStorage {
   constructor(public obj: ProjectKeyId, public bucketName: string) {
     super(obj);
     this.bucketName = bucketName;
@@ -44,16 +42,15 @@ export class gcsFileUpload extends CloudStorage {
         resumable: options ? options.resum : false,
         gzip: options ? options.gcszip : false,
       });
-      blobStream.on('finish', () => {
-        const publicUrl: string = format(
-          `https://storage.googleapis.com/${bucket.name}/${blob.name}`,
-        );
-        resolve(publicUrl);
-      })
-        .on('error', () => {
-          reject('Unable to upload file, something went wrong');
+      try {
+        blobStream.on('finish', () => {
+          const publicUrl: string = `https://storage.googleapis.com/${bucket.name}/${blob.name}`
+          resolve(publicUrl);
         })
-        .end(buffer);
+          .end(buffer);
+      } catch (error) {
+        reject(error)
+      }
     });
   }
 }

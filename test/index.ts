@@ -1,6 +1,6 @@
-const { gcsFileUpload } = require('../')
 const path = require('path')
 const fs = require('fs')
+const { GcsFileUpload } = require('../')
 
 const serviceKey = path.join(__dirname, './storage.json')
 const file = path.join(__dirname, './bakugo.jpg')
@@ -20,12 +20,13 @@ const fileMetaData2 = {
 	buffer: myFile2
 }
 
-const myBucket = new gcsFileUpload({
-  keyFilename: serviceKey,
-  projectId: 'hacker-bay',
+const myBucket = new GcsFileUpload({
+	keyFilename: serviceKey,
+	projectId: 'hacker-bay',
 }, "hacker-bay-store")
 
 console.log(myBucket.getGCSBuckets())
+console.log(fileMetaData)
 
 myBucket
 	.uploadFile(fileMetaData)

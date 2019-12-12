@@ -1,6 +1,6 @@
 {
   "name": "gcs-file-upload",
-  "version": "1.0.1",
+  "version": "1.1.1",
   "description": "Upload files to GCS and firebase storage.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -20,6 +20,7 @@
     "@google-cloud/storage": "^4.1.0"
   },
   "devDependencies": {
+    "@types/node": "^12.12.14",
     "@types/webgl-ext": "0.0.30",
     "@typescript-eslint/eslint-plugin": "^2.6.1",
     "@typescript-eslint/parser": "^2.6.1",
@@ -31,6 +32,6 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/your-user/repo-url.git"
+    "url": "https://github.com/olamilekan000/gcs-file-upload.git"
   }
 }

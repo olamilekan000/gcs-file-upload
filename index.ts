@@ -17,7 +17,7 @@ interface uploadOptions {
   gcszip?: boolean
 }
 
-export class gcsFileUpload extends CloudStorage {
+export class GcsFileUpload extends CloudStorage {
   constructor(public obj: ProjectKeyId, public bucketName: string) {
     super(obj);
     this.bucketName = bucketName;
@@ -42,14 +42,23 @@ export class gcsFileUpload extends CloudStorage {
         resumable: options ? options.resum : false,
         gzip: options ? options.gcszip : false,
       });
-      blobStream.on('finish', () => {
-        const publicUrl: string = `https://storage.googleapis.com/${bucket.name}/${blob.name}`
-        resolve(publicUrl);
-      })
-        .on('error', () => {
-          reject('Unable to upload file, something went wrong');
+      try {
+        blobStream.on('finish', () => {
+          const publicUrl: string = `https://storage.googleapis.com/${bucket.name}/${blob.name}`
+          resolve(publicUrl);
         })
-        .end(buffer);
+          .end(buffer);
+      } catch (error) {
+        reject(error)
+      }
+      // blobStream.on('finish', () => {
+      //   const publicUrl: string = `https://storage.googleapis.com/${bucket.name}/${blob.name}`
+      //   resolve(publicUrl);
+      // })
+      //   .on('error', () => {
+      //     reject('Unable to upload file, something went wrong');
+      //   })
+      //   .end(buffer);
     });
   }
 }
